@@ -4,11 +4,15 @@ import path from "path";
 import { Server } from "socket.io";
 import { fileURLToPath } from "url";
 
-
+// new instance of express is created as app
 const app = express();
 const PORT = 4000;
 
+//we could link this httpServer to socket server
 const httpServer = http.createServer(app);
+
+//here linking
+//An instance of the Socket.io Server is created, and it is passed the httpServer to handle WebSocket connections. This line establishes a connection between the HTTP server created using Express and the Socket.io server, allowing them to work together.
 const io = new Server(httpServer);
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,7 +23,7 @@ const __dirname = path.dirname(__filename);
 
 
 app.get("/", (req, res) => {
-    //res.json({data: "Hello World from server"});
+    //res.json({data: "Hello World from server socket"});
     res.sendFile(__dirname + "/index.html");
 });
 
@@ -59,7 +63,7 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
-//connect part user first connect then dissconnect
+//connect part, user first connect then dissconnect
 io.on("connection", (socket) => {
     //console.log("Connection is ready");
     /*
@@ -67,7 +71,7 @@ io.on("connection", (socket) => {
     here we are handling it
     * socket.on -> it listen a event
     */
-    socket.on("send-message", (data)=>{
+    socket.on("send-message", (data)=>{  
         //console.log("Message Recived", data);
         /*
             3> sending "send-message" event from backend/server and its content as data

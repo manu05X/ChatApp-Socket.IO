@@ -29,7 +29,7 @@ function App() {
     socket.on("message-from-server", (data) => {
       //console.log("Message Recieved", data);
       //now set the chat
-      setChat([...chat, data.message]);
+      setChat((pev) => [...prev, data.message]);
     });
   }, [socket]);
 

@@ -1,7 +1,11 @@
 import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
@@ -14,9 +18,9 @@ function App() {
   //ir is an arry of empty string
   const [chat, setChat] = useState([]);
 
-  // useEffect(()=>{
-  //   setSocket(io("http://localhost:4000"));
-  // }, []);
+  useEffect(()=>{
+    setSocket(io("http://localhost:4000"));
+  }, []);
 
   /*
     4> Reciving "message-from-server" event from backend/server and its content as data
@@ -29,7 +33,7 @@ function App() {
     socket.on("message-from-server", (data) => {
       //console.log("Message Recieved", data);
       //now set the chat
-      setChat((pev) => [...prev, data.message]);
+      setChat((prev) => [...prev, data.message]);
     });
   }, [socket]);
 
@@ -56,14 +60,20 @@ function App() {
       </Box>
       
       <Box component="form" onSubmit={handleForm}>
-        <TextField 
+        <OutlinedInput
+          placeholder="Write your message"
           size="small"
-          label="Write your message" 
-          variant="standard" 
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton type="submit" edge="end">
+                <SendIcon/>
+              </IconButton>
+            </InputAdornment>
+           }
         />
-        <Button variant="text" type="submit">Submit</Button>
+
         </Box>
     </Container>
     </div>

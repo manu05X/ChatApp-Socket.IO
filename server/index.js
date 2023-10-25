@@ -41,6 +41,18 @@ io.on("connection", (socket) => {
         */
        socket.broadcast.emit("message-from-server", data);
     });
+    //2> typing-started event recived from frontend
+    socket.on("typing-started", (data)=>{  
+        //console.log("someting typing");
+        //3> sending brodcast to other user from server to frontend
+       socket.broadcast.emit("typing-started-from-server");
+    });
+
+    //2> typing stoped
+    socket.on("typing-stoped", (data)=>{
+        //3> sending brodcast to other user from server to frontend
+       socket.broadcast.emit("typing-stoped-from-server");
+    });
 
     //disconnect Part
     socket.on("disconnect", (socket) => {

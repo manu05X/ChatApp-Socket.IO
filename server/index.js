@@ -54,6 +54,13 @@ io.on("connection", (socket) => {
        socket.broadcast.emit("typing-stoped-from-server");
     });
 
+    //2> Joining Room
+    socket.on("join-room", ({roomId})=>{
+        console.log("Joining room")
+        //3> sending brodcast to other user from server to frontend
+       socket.join(roomId);
+    });
+
     //disconnect Part
     socket.on("disconnect", (socket) => {
         console.log("User left the chat");

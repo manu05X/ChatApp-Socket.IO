@@ -9,10 +9,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+import { useOutletContext } from 'react-router-dom';
 
 export default function ChatWindow() {
-    const [socket, setSocket] = useState(null);
+    const { socket } = useOutletContext();
     //const socket = io("http://localhost:4000");
     const [message, setMessage] = useState("");
     /*collect what ever we are sending from one windo to othwr and show it in UI*/
@@ -20,10 +20,6 @@ export default function ChatWindow() {
     const [chat, setChat] = useState([]);
     //Typing event
     const [typing, setTyping] = useState(false);
-
-    useEffect(()=>{
-        setSocket(io("http://localhost:4000"));
-      }, []);
     
       /*
         4> Reciving "message-from-server" event from backend/server and its content as data
@@ -87,7 +83,7 @@ export default function ChatWindow() {
       }
 
   return (
-    <Box sx={{display:'flex', justifyContent:"center"}}>
+    
         <Card 
         sx={{ 
             padding:2, 
@@ -133,6 +129,5 @@ export default function ChatWindow() {
 
             </Box>
         </Card>
-    </Box>
   )
 }
